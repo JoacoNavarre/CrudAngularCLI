@@ -3,50 +3,31 @@
       <div class="card">
           <div class="card-body">
 
-            <div class="progress">
+            <div class="progress m-t-20" >
               <div class="progress-bar bg-primary progress-bar-striped active"
               style="height:10px;"
-              [style.width]="getPercentage"
+              [style.width]="getPercentage1"
               >
               </div>
               </div>
+
+              <div class="progress m-t-20" >
+                <div class="progress-bar bg-info progress-bar-striped active"
+                style="height:10px;"
+                [style.width]="getPercentage2"
+                >
+                </div>
+                </div>
+
 
           </div>
       </div>
   </div>
 </div>
 
+<app-incrementador (outputValue)="progress1=$event"
+[progress]="progress1"
+></app-incrementador>
 
-<div class="row">
-
-  <div class="col-6">
-    <div class="card">
-    <div class="card-body">
-        <div class="input-group">
-
-          <span class="input-group-btn">
-            <button
-            (click)="changeValues(-5)"
-            class="btn btn-primary"
-            type="button"
-            >
-              <i class="fa fa-minus"></i>
-            </button>
-          </span>
-
-          <span class="input-group-btn">
-            <button
-            (click)="changeValues(5)"
-            class="btn btn-primary"
-            type="button"
-            >
-              <i class="fa fa-plus"></i>
-            </button>
-          </span>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
+<app-incrementador (outputValue)="progress2 = $event"
+[progress]="progress2"></app-incrementador>
