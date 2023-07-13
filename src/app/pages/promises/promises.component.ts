@@ -9,7 +9,9 @@ export class PromisesComponent implements OnInit{
 
   ngOnInit(): void {
 
-    const promise = new Promise(() => {});
+    const promise = new Promise(() => {
+
+    });
   }
 
 }
