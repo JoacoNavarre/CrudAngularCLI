@@ -16,7 +16,7 @@
                             <input class="form-control"
                                     type="text"
                                     placeholder="Name"
-                                    formControlName="name">
+                                    formControlName="nombre">
                         </div>
                     </div>
                     <div class="form-group ">
@@ -56,7 +56,7 @@
 
                     <div class="row">
                       <div class="col text-danger">
-                        <p *ngIf="invalidField('name')">El nombre es obligatorio</p>
+                        <p *ngIf="invalidField('nombre')">El nombre es obligatorio</p>
                         <p *ngIf="invalidField('email')">El email es obligatorio y debe ser válido</p>
                         <p *ngIf="acceptTerms()">Debe aceptar los términos y condiciones</p>
                         <p *ngIf="invalidPassword()">Las contraseñas deben coincidir</p>
