@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
-
-declare function customInitFunctions(): any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,11 +11,29 @@ declare function customInitFunctions(): any;
 })
 export class LoginComponent {
 
-  constructor( private router: Router, ){}
+  public formSubmited = false;
+
+  public loginForm = this.fb.group({
+    email: ['joaco@mail.com', [Validators.required, Validators.email]],
+    password: ['1234567', Validators.required],
+    remember: [false]
+  })
+
+  constructor( private router: Router,
+               private fb: FormBuilder,
+               private userService: UserService
+              ){}
 
   login(){
-    this.router.navigateByUrl('/');
-    customInitFunctions();
-  }
+    this.formSubmited = true;
+
+    console.log(this.loginForm.value)
+      this.userService.userLogin(this.loginForm.value)
+       .subscribe({
+         next: (response => {console.log("El usuario fue creado correctamente", response), this.router.navigateByUrl('/')}),
+         error: ( err => Swal.fire('Error', err.error.msg, 'error') )
+       });
+
+  };
 
 }

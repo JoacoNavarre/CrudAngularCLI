@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ export class RegisterComponent {
       this.userService.crateUser( this.registerForm.value)
       .subscribe({
         next: (response => {console.log("El usuario fue creado correctamente", response)}),
-        error: ( err => {console.warn(err)})
+        error: ( err => Swal.fire('Error', err.error.msg, 'error') )
       });
 
     }else{
