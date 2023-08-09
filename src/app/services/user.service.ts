@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { enviroment } from 'src/enviroments/enviroments';
 
+import { tap } from 'rxjs';
+
 import { RegisterForm } from '../auth/interfaces/register-user.interfaces';
 import { LoginForm } from '../auth/interfaces/login-user.interfaces';
 
@@ -18,11 +20,17 @@ export class UserService {
 
   crateUser( formData: RegisterForm ) {
 
-    return this.http.post( `${base_url}/usuarios`, formData );
+    return this.http.post( `${base_url}/usuarios`, formData )
+                .pipe(
+                  tap((res:any) => localStorage.setItem('token', res.token))
+                )
   };
 
   userLogin( loginForm: any){
 
-    return this.http.post( `${base_url}/login`, loginForm );
+    return this.http.post( `${base_url}/login`, loginForm )
+              .pipe(
+                tap((res:any) => localStorage.setItem('token', res.token))
+              )
   }
 }

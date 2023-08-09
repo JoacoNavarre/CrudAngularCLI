@@ -14,9 +14,9 @@ export class LoginComponent {
   public formSubmited = false;
 
   public loginForm = this.fb.group({
-    email: ['joaco@mail.com', [Validators.required, Validators.email]],
-    password: ['1234567', Validators.required],
-    remember: [false]
+    email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    remember: [ localStorage.getItem('remember') === "true" ?? false]
   })
 
   constructor( private router: Router,
@@ -27,13 +27,33 @@ export class LoginComponent {
   login(){
     this.formSubmited = true;
 
-    console.log(this.loginForm.value)
-      this.userService.userLogin(this.loginForm.value)
-       .subscribe({
-         next: (response => {console.log("El usuario fue creado correctamente", response), this.router.navigateByUrl('/')}),
-         error: ( err => Swal.fire('Error', err.error.msg, 'error') )
-       });
+    if(this.loginForm.get('remember')?.value){
+      localStorage.setItem('email', this.loginForm.get('email')?.value || "")
+      localStorage.setItem('remember', "true")
+    }else{
+      localStorage.removeItem('email')
+      localStorage.removeItem('remember')
+    }
 
-  };
+
+      this.userService.userLogin(this.loginForm.value)
+      .subscribe({
+        next: (response => {
+          console.log("El usuario fue creado correctamente", response),
+          this.router.navigateByUrl('/')
+
+          if(this.loginForm.get('remember')?.value){
+            localStorage.setItem('email', this.loginForm.get('email')?.value || "")
+            localStorage.setItem('remember', "true")
+          }else{
+            localStorage.removeItem('email')
+            localStorage.removeItem('remember')
+          }
+
+        }),
+        error: ( err => Swal.fire('Error', err.error.msg, 'error') )
+      });
+
+    };
 
 }
