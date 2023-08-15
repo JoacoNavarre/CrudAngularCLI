@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { enviroment } from 'src/enviroments/enviroments';
 
-import { tap, map, Observable } from 'rxjs';
+import { tap, map, Observable, catchError, of } from 'rxjs';
 
 import { RegisterForm } from '../auth/interfaces/register-user.interfaces';
 import { LoginForm } from '../auth/interfaces/login-user.interfaces';
@@ -30,7 +30,8 @@ export class UserService {
       tap( (res: any) => {
         localStorage.setItem('token', res.token)
       }),
-      map( res => true)
+      map( res => true),
+      catchError( err => of(false))
     )
   }
 

@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot){
 
-      this.userService.validateToken()
+     return this.userService.validateToken()
         .pipe(
           tap( (isAuthenticated:boolean) => {
             if(!isAuthenticated){
@@ -29,7 +29,6 @@ export class AuthGuard implements CanActivate {
 
       console.log("boocaa")
 
-      return true
     }
 }
 

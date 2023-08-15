@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -22,7 +23,7 @@ export class RegisterComponent {
     validators: this.equalPasswords('password', 'password2')
   })
 
-  constructor( private fb: FormBuilder, private userService: UserService){}
+  constructor( private fb: FormBuilder, private userService: UserService, private router: Router){}
 
   createUser(){
     this.formSubmited = true;
@@ -33,7 +34,10 @@ export class RegisterComponent {
 
       this.userService.crateUser( this.registerForm.value)
       .subscribe({
-        next: (response => {console.log("El usuario fue creado correctamente", response)}),
+        next: (response => {
+          console.log("El usuario fue creado correctamente", response)
+          this.router.navigateByUrl("/")
+              }),
         error: ( err => Swal.fire('Error', err.error.msg, 'error') )
       });
 
