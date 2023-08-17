@@ -50,4 +50,9 @@ export class UserService {
                 tap((res:any) => localStorage.setItem('token', res.token))
               )
   }
+
+  userLogout(){
+    localStorage.removeItem('token')
+  }
+
 }
