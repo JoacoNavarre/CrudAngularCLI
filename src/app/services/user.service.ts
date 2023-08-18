@@ -7,6 +7,7 @@ import { tap, map, Observable, catchError, of } from 'rxjs';
 
 import { RegisterForm } from '../auth/interfaces/register-user.interfaces';
 import { LoginForm } from '../auth/interfaces/login-user.interfaces';
+import { User } from '../models/user.models';
 
 const base_url = enviroment.bas_url
 
@@ -16,11 +17,14 @@ const base_url = enviroment.bas_url
 })
 export class UserService {
 
+  public user: User;
+
   constructor( private http: HttpClient ) {}
 
   validateToken(): Observable<boolean>{
 
     const token = localStorage.getItem('token') || '';
+
 
     return this.http.get( `${base_url}/login/renew`, {
       headers: {
@@ -28,6 +32,8 @@ export class UserService {
       }
     }).pipe(
       tap( (res: any) => {
+        const { nombre, email, img, google, role, uid } = res.usuario;
+        this.user = new User(nombre, email, "" , google, img, role, uid)
         localStorage.setItem('token', res.token)
       }),
       map( res => true),

@@ -39,7 +39,6 @@ export class LoginComponent {
       this.userService.userLogin(this.loginForm.value)
       .subscribe({
         next: (response => {
-          console.log("El usuario fue creado correctamente", response),
           this.router.navigateByUrl('/')
 
           if(this.loginForm.get('remember')?.value){
