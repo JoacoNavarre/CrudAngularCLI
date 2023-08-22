@@ -1,4 +1,6 @@
+import { enviroment } from "src/enviroments/enviroments"
 
+const base_url = enviroment.bas_url
 
 export class User {
 
@@ -12,4 +14,12 @@ export class User {
     public uid?: string
   ){}
 
+  get imgUrl(){
+
+    if(this.img){
+      return `${base_url}/upload/usuarios/${ this.img }`
+    }else{
+      return `${base_url}/upload/usuarios/no-image`
+    }
+  }
 }
