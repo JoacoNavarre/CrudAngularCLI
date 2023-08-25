@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromisesComponent } from './promises/promises.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -22,7 +23,8 @@ import { PromisesComponent } from './promises/promises.component';
     Grafica1Component,
     PagesComponent,
     AccountSettingsComponent,
-    PromisesComponent
+    PromisesComponent,
+    ProfileComponent
   ],
   exports:[
       DashboardComponent,
