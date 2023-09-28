@@ -23,22 +23,28 @@ export class UserService {
 
   validateToken(): Observable<boolean>{
 
-    const token = localStorage.getItem('token') || '';
-
 
     return this.http.get( `${base_url}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
       tap( (res: any) => {
         const { nombre, email, img, google, role, uid } = res.usuario;
         this.user = new User(nombre, email, "" , google, img, role, uid)
         localStorage.setItem('token', res.token)
+        return true
       }),
-      map( res => true),
       catchError( err => of(false))
     )
+  }
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string {
+    return this.user.uid || '';
   }
 
   crateUser( formData: RegisterForm ) {
@@ -48,6 +54,17 @@ export class UserService {
                   tap((res:any) => localStorage.setItem('token', res.token))
                 )
   };
+
+  updateProfile( formData: {email:string, nombre:string } ) {
+
+    const data = {  ...formData, role: this.user.role}
+
+    return this.http.put( `${base_url}/usuarios/${this.uid}`, data, {
+      headers: {
+        'x-token': this.token
+      }
+    } )
+  }
 
   userLogin( loginForm: any){
 
