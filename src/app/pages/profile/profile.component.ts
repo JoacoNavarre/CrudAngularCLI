@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.models';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -14,9 +15,10 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit{
 
   public profileForm: FormGroup;
-  public user: User
+  public user: User;
+  public uploadImg: File;
 
-  constructor( private fb: FormBuilder, private userService: UserService)
+  constructor( private fb: FormBuilder, private userService: UserService, private fileUpoadService: FileUploadService)
   {
     this.user = this.userService.user
   }
@@ -40,5 +42,14 @@ export class ProfileComponent implements OnInit{
           this.user.email = email;
         })
 };
+
+changeImg( file: any): void {
+  this.uploadImg = file.target.files[0];
+};
+
+updateImg(): void {
+  this.fileUpoadService.updateImage(this.uploadImg, 'usuarios', this.user.uid )
+  console.log("aber aora")
+}
 
 }

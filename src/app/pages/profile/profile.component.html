@@ -57,12 +57,16 @@
 
         <img src="">
 
-        <input type="file" >
+        <input type="file" (change)="changeImg($event)">
 
         <br>
         <br>
 
-        <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10">
+        <button
+          type="button"
+          class="btn btn-success btn-block waves-effect waves-light m-r-10"
+          (click)="updateImg()"
+          >
           <i class="fa fa-save"></i>
           Submit
         </button>

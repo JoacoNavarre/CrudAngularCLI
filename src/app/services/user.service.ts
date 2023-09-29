@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { enviroment } from 'src/enviroments/enviroments';
 
-import { tap, map, Observable, catchError, of } from 'rxjs';
+import { tap, Observable, catchError, of } from 'rxjs';
 
 import { RegisterForm } from '../auth/interfaces/register-user.interfaces';
-import { LoginForm } from '../auth/interfaces/login-user.interfaces';
 import { User } from '../models/user.models';
 
 const base_url = enviroment.bas_url
