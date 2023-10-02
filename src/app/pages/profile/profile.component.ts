@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.models';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -41,7 +42,11 @@ export class ProfileComponent implements OnInit{
           const {usuario, email} = this.profileForm.value
           this.user.name = usuario;
           this.user.email = email;
-        })
+
+          Swal.fire('Saved', 'Changes were saved correctly', 'success')
+        }, (err) => {
+          Swal.fire('Error', err.error.msg, 'error')
+        });
 };
 
 changeImg( file: any): void {
@@ -65,7 +70,12 @@ changeImg( file: any): void {
 updateImg(): void {
   this.fileUpoadService
     .updateImage(this.uploadImg, 'usuarios', this.user.uid )
-    .then( img => this.user.img = img);
+    .then( img => {
+      this.user.img = img
+      Swal.fire('Saved', 'Image was saved correctly', 'success')
+    }).catch( err => {
+      Swal.fire('Error', 'There was an error uploading the image', 'error')
+    });
 }
 
 }
