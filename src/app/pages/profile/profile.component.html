@@ -55,7 +55,10 @@
         <h4 class="card-title">Avatar</h4>
         <h6 class="card-subtitle">User Image</h6>
 
-        <img src="">
+        <div class="text-center">
+          <img *ngIf="!tempImg" [src]="user.imgUrl" class="img-avatar">
+          <img *ngIf="tempImg" [src]="tempImg" class="img-avatar">
+        </div>
 
         <input type="file" (change)="changeImg($event)">
 

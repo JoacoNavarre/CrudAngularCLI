@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit{
   public profileForm: FormGroup;
   public user: User;
   public uploadImg: File;
+  public tempImg: string | null;
 
   constructor( private fb: FormBuilder, private userService: UserService, private fileUpoadService: FileUploadService)
   {
@@ -44,12 +45,27 @@ export class ProfileComponent implements OnInit{
 };
 
 changeImg( file: any): void {
-  this.uploadImg = file.target.files[0];
+
+  this.uploadImg = file.target.files[0]
+
+  if(!this.uploadImg){
+    this.tempImg = null
+    return;
+  }
+
+   const reader = new FileReader();
+   const url64 = reader.readAsDataURL( this.uploadImg);
+
+  reader.onloadend = () => {
+      this.tempImg = reader.result as string;
+  }
+
 };
 
 updateImg(): void {
-  this.fileUpoadService.updateImage(this.uploadImg, 'usuarios', this.user.uid )
-  console.log("aber aora")
+  this.fileUpoadService
+    .updateImage(this.uploadImg, 'usuarios', this.user.uid )
+    .then( img => this.user.img = img);
 }
 
 }
