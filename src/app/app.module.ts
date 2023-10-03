@@ -6,11 +6,17 @@ import { PagesModule } from './pages/pages.module';
 import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
+import { UserComponent } from './manteinance/user/user.component';
+import { HospitalsComponent } from './manteinance/hospitals/hospitals.component';
+import { DoctorsComponent } from './manteinance/doctors/doctors.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    UserComponent,
+    HospitalsComponent,
+    DoctorsComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,15 @@ export class SidebarService {
         {title: 'Grafics', url:'grafica1'},
         {title: 'Promises', url:'promises'}
       ]
+    },
+    {
+      title: 'Manteinance',
+      icon: 'mdi mdi-folder-lock-open',
+      submenu: [
+        {title: 'Users', url:'users'},
+        {title: 'Hospitals', url:'hospitals'},
+        {title: 'Doctors', url:'doctors'}
+      ]
     }
   ]
 
