@@ -5,7 +5,7 @@ const base_url = enviroment.bas_url
 export class User {
 
   constructor(
-    public name: string,
+    public nombre: string,
     public email: string,
     public password?: string,
     public google?: boolean,

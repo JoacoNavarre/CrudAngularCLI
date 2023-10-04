@@ -5,8 +5,9 @@ import { enviroment } from 'src/enviroments/enviroments';
 
 import { tap, Observable, catchError, of } from 'rxjs';
 
-import { RegisterForm } from '../auth/interfaces/register-user.interfaces';
+import { RegisterForm } from '../interfaces/register-user.interfaces';
 import { User } from '../models/user.models';
+import { LoadUsersResponse } from '../interfaces/load-users.interface';
 
 const base_url = enviroment.bas_url
 
@@ -23,11 +24,7 @@ export class UserService {
   validateToken(): Observable<boolean>{
 
 
-    return this.http.get( `${base_url}/login/renew`, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
+    return this.http.get( `${base_url}/login/renew`, this.headers).pipe(
       tap( (res: any) => {
         const { nombre, email, img, google, role, uid } = res.usuario;
         this.user = new User(nombre, email, "" , google, img, role, uid)
@@ -46,6 +43,13 @@ export class UserService {
     return this.user.uid || '';
   }
 
+  get headers(){
+    return {
+      headers: {
+      'x-token': this.token
+    }}
+  }
+
   crateUser( formData: RegisterForm ) {
 
     return this.http.post( `${base_url}/usuarios`, formData )
@@ -58,11 +62,7 @@ export class UserService {
 
     const data = {  ...formData, role: this.user.role}
 
-    return this.http.put( `${base_url}/usuarios/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token
-      }
-    } )
+    return this.http.put( `${base_url}/usuarios/${this.uid}`, data, this.headers)
   }
 
   userLogin( loginForm: any){
@@ -76,5 +76,10 @@ export class UserService {
   userLogout(){
     localStorage.removeItem('token')
   }
+
+  getUsers( from: number = 0){
+
+    return this.http.get<any>( `${base_url}/usuarios?desde=${from}`, this.headers)
+  };
 
 }

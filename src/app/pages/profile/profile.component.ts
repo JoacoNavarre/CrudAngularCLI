@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit{
   ngOnInit(): void {
 
     this.profileForm = this.fb.group({
-      nombre: [this.user.name, Validators.required],
+      nombre: [this.user.nombre, Validators.required],
       email: [this.user.email, [Validators.required, Validators.email]]
     })
 
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit{
       .subscribe( () =>
         {
           const {usuario, email} = this.profileForm.value
-          this.user.name = usuario;
+          this.user.nombre = usuario;
           this.user.email = email;
 
           Swal.fire('Saved', 'Changes were saved correctly', 'success')
