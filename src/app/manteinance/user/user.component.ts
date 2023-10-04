@@ -13,26 +13,40 @@ export class UserComponent implements OnInit {
   public totalUsers: number = 0;
   public users: User[];
   public paginationFrom: number = 0;
+  public isLoading: boolean = false;
 
   constructor( private userService: UserService) { }
 
   ngOnInit()
   {
+    this.loadUsers();
+  }
+
+  loadUsers(){
+
+    this.isLoading = true;
+
     this.userService.getUsers(this.paginationFrom)
       .subscribe( (res) => {
         this.totalUsers = res.total;
-        this.users = res.usuarios
+        this.users = res.usuarios;
+
+        this.isLoading = false;
       }
       )
   }
+
 
   changePage( val:number){
 
     this.paginationFrom += val;
 
-    if(this.paginationFrom <= 0){
+    if(this.paginationFrom < 0){
       this.paginationFrom = 0;
+    }else if ( this.paginationFrom >= this.totalUsers ) {
+      this.paginationFrom -= val;
     }
+    this.loadUsers();
   }
 
 }
